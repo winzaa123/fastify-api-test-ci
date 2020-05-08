@@ -1,8 +1,14 @@
 import "reflect-metadata"
 import fp from "fastify-plugin"
-import { createConnection, getConnectionOptions } from "typeorm"
+import { createConnection, getConnectionOptions,getRepository,Repository } from "typeorm"
 import { CarPark } from "../modules/carpark/entity"
 import { Parking } from "../modules/parking/entity"
+
+
+export type ServerDB = {
+    dbPark: Repository<Parking>
+    ,dbCarPark: Repository<CarPark>  
+}
 
 export default fp(async server => {
   try {
@@ -15,11 +21,9 @@ export default fp(async server => {
     const connection = await createConnection(connectionOptions)
     console.log("database connected")
 
-    server.decorate("db", {
-      
-      parking: connection.getRepository(Parking)
-      ,carPark: connection.getRepository(CarPark)
-
+    server.decorate("db", <ServerDB> {
+      dbPark: connection.getRepository(Parking)
+      ,dbCarPark: connection.getRepository(CarPark)
     })
   } catch (error) {
     console.log(error)

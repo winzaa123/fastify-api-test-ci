@@ -1,16 +1,15 @@
 import { createParkSchema,updateParkSchema   } from "./schema"
-import { Repository } from "typeorm";
-import { Parking } from "./entity"
 
-export default (server , options, next) => {
+import { FastifyServer } from "../context"
 
+export default (server :FastifyServer , options, next) => {
     server.post(
     "/create",
     { schema: createParkSchema},
     async (req, res) => {
       const {code,priority,status} = req.body
-      , db : Repository<Parking>  = server.db.parking
-      await db.save(db.create({
+      , {dbPark}  = server.db
+      await dbPark.save(dbPark.create({
         code,priority,status
       }))
       res.code(200).send({status:true,msg:"Create Success"})
@@ -22,8 +21,8 @@ export default (server , options, next) => {
     async (req, res) => {
       req.log.info(`update #${req.params.id}`)
       const {code,priority,status} = req.body
-      , db : Repository<Parking>  = server.db.parking
-      await db.update(req.params.id,{
+      , {dbPark}  = server.db
+      await dbPark.update(req.params.id,{
         code,priority,status
       })
       res.code(200).send({status:true,msg:"Update Success"})

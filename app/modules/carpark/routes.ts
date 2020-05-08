@@ -1,20 +1,17 @@
 import {requestCarParkSchema  } from "./schema"
-import { Repository } from "typeorm";
-import { CarPark } from "./entity"
 import { ParkStatus } from "../parking/enum"
 
 
-import { Parking } from "../parking/entity"
+import { FastifyServer } from "../context"
 
 
-export default (server, options, next) => {
+export default (server: FastifyServer, options, next) => {
   server.post(
     "/request/park",
     { schema: requestCarParkSchema},
     async (req, res) => {
       const {plateNumber,size} = req.body
-      , dbPark : Repository<Parking>  = server.db.parking
-      , dbCar : Repository<CarPark>  = server.db.carPark
+      , {dbCarPark,dbPark}  = server.db
 
       const parkFirst = await dbPark.findOne({where:{status:ParkStatus.ready},order:{priority:"ASC"}})
 
@@ -22,7 +19,7 @@ export default (server, options, next) => {
         return {status:false,msg:"Can't process because slot full"}
       }
       await dbPark.update(parkFirst,{status:ParkStatus.active})
-      await dbCar.save(dbCar.create({
+      await dbCarPark.save(dbCarPark.create({
         plateNumber,size,parkId:parkFirst.id
       }))
 
@@ -35,8 +32,7 @@ export default (server, options, next) => {
     { schema: requestCarParkSchema},
     async (req, res) => {
       const {plateNumber,size,parkStatus,parkId} = req.body
-      , dbPark : Repository<Parking>  = server.db.parking
-      , dbCar : Repository<CarPark>  = server.db.carPark
+      , {dbCarPark,dbPark}  = server.db
 
     }
   )
