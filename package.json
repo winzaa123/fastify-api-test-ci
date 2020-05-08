@@ -1,0 +1,27 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "db:init": "app/node_modules/.bin/ts-node-dev ./app/helper.ts --type=init",
+    "db:sync": "app/node_modules/.bin/ts-node-dev ./app/helper.ts --type=sync",
+    "db:seed": "app/node_modules/.bin/ts-node-dev ./app/helper.ts --type=seed",
+    "db:seed:user": "app/node_modules/.bin/ts-node-dev ./app/helper.ts --type=seed:user",
+    "db:test": "app/node_modules/.bin/ts-node-dev ./app/helper.ts --type=test",
+    "db:droptable": "app/node_modules/.bin/ts-node-dev ./app/helper.ts --type=droptable", 
+    "typeorm": "app/node_modules/.bin/ts-node -r ./app/node_modules/tsconfig-paths/register ./app/node_modules/typeorm/cli.js",
+    "migration:create": "cd ./app && yarn run migration:create",
+    "migration:run": "cd ./app && yarn run migration:run",
+    "migration:revert": "cd ./app && yarn run migration:revert",
+    "test": "cd app && yarn test",
+    "build": "cd app && yarn build",
+    "start": "app/node_modules/.bin/ts-node ./app/index.ts",
+    
+    "dev": "app/node_modules/.bin/ts-node-dev --no-notify --respawn --transpileOnly ./app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {}
+}
