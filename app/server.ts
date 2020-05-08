@@ -4,6 +4,8 @@ import fastify from "fastify"
 import cors from "cors"
 
 import db from "./plugins/db"
+import carparkRoute from "./modules/carpark/routes"
+import parkRoute from "./modules/parking/routes"
 
 
 function createServer() {
@@ -34,6 +36,9 @@ function createServer() {
   })
 
   server.register(db)
+  server.register(parkRoute,{routePrefix:'/parks'})
+  server.register(carparkRoute)
+
 
 
   server.setErrorHandler((error, req, res) => {

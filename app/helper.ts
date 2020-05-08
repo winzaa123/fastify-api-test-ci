@@ -3,6 +3,9 @@ import "reflect-metadata"
 
 import * as TypeORM from "typeorm";
 
+import { CarPark } from "./modules/carpark/entity"
+import { Parking } from "./modules/parking/entity"
+
 
 
 function getArgs () {
@@ -45,7 +48,7 @@ async function main(){
         logging: "all",
         dropSchema,
         charset: "utf8mb4_unicode_ci",
-      entities: [ ]
+      entities: [ Parking,CarPark]
     })
     try {
     await TypeORM.createConnection(connectionOptions)
