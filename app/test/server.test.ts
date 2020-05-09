@@ -145,22 +145,115 @@ describe("Server", () => {
           }
         )
       })
-      test("GET /parks/available/:size Check Available park by Size", done => {
+
+      const checkSmall = (textDisplay,expectData) =>{
+        test(textDisplay, done => {
+          server.inject(
+            {
+              method: "GET",
+              url: `/parks/available/${CarSize.small}`,
+            },
+            (err, res) => {
+              expect(res.statusCode).toBe(200)
+              const payload = JSON.parse(res.payload)
+              expect(payload).toEqual(expectData)
+              done(err)
+            }
+          )
+        })
+      }
+      checkSmall( "GET /parks/available/:size Check Available park by Size Full",{
+        "total": 2,
+        "available": 2
+      })
+      
+      test("POST /request/park  Request park slot unavailable", done => {
+        const body =   {
+          plateNumber: "ABC-1234",
+          size: CarSize.medium
+        }
         server.inject(
           {
-            method: "GET",
-            url: `/parks/available/${CarSize.small}`,
+            method: "POST",
+            url: `/request/park`,
+            payload: body,
           },
           (err, res) => {
             expect(res.statusCode).toBe(200)
             const payload = JSON.parse(res.payload)
-            expect(payload).toEqual({
-              "total": 2,
-              "available": 2
-            })
+            expect(payload.status).toEqual(false)
             done(err)
           }
         )
+      })
+
+      test("POST /request/park  Request park slot available", done => {
+        const body =   {
+          plateNumber: "ABC-1234",
+          size: CarSize.small
+        }
+        server.inject(
+          {
+            method: "POST",
+            url: `/request/park`,
+            payload: body,
+          },
+          (err, res) => {
+            expect(res.statusCode).toBe(200)
+            const payload = JSON.parse(res.payload)
+            expect(payload.status).toEqual(true)
+            done(err)
+          }
+        )
+      })
+
+      test("POST /request/park  Request park slot available", done => {
+        const body =   {
+          plateNumber: "ABC-2000",
+          size: CarSize.small
+        }
+        server.inject(
+          {
+            method: "POST",
+            url: `/request/park`,
+            payload: body,
+          },
+          (err, res) => {
+            expect(res.statusCode).toBe(200)
+            const payload = JSON.parse(res.payload)
+            expect(payload.status).toEqual(true)
+            done(err)
+          }
+        )
+      })
+
+      checkSmall( "GET /parks/available/:size Check Available park by Size after request",{
+        "total": 2,
+        "available": 0
+      })
+
+      test("POST /checkout/park  Request park slot available", done => {
+        const body =   {
+          id: 1
+        }
+        server.inject(
+          {
+            method: "POST",
+            url: `/checkout/park`,
+            payload: body,
+          },
+          (err, res) => {
+            expect(res.statusCode).toBe(200)
+            const payload = JSON.parse(res.payload)
+            expect(payload.status).toEqual(true)
+            done(err)
+          }
+        )
+      })
+
+      checkSmall( "GET /parks/available/:size Check Available park by Size after request",{
+        "total": 1,
+        "available": 1
       })
 
             

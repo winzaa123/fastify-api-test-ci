@@ -13,7 +13,7 @@
     "migration:create": "cd ./app && yarn run migration:create",
     "migration:run": "cd ./app && yarn run migration:run",
     "migration:revert": "cd ./app && yarn run migration:revert",
-    "test": "cd app && yarn test",
+    "test": "cd app && yarn test --detectOpenHandles",
     "test:watch": "cd app && yarn test:watch",
 
     "build": "cd app && yarn build",
