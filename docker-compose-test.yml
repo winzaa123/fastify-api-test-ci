@@ -7,17 +7,17 @@ networks:
     driver: bridge
 
 services:
-  nginx:
-    image: nginx:alpine
-    container_name: type_app_nginx
-    volumes:
-      - ./nginx:/etc/nginx/
-    ports:
-      - $APP_PORT:80
-    links:
-      - backend_app:app
-    networks: 
-      - backend_network
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: type_app_nginx
+  #   volumes:
+  #     - ./nginx:/etc/nginx/
+  #   ports:
+  #     - $APP_PORT:80
+  #   links:
+  #     - backend_app:app
+  #   networks: 
+  #     - backend_network
   # backend_app:
   #   build:
   #     context: ./app
