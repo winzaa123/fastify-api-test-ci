@@ -27,8 +27,6 @@ services:
     working_dir: /mnt/app  
     command: > 
         sh -c "pm2-runtime start /mnt/app/linux.config.js --env production"
-    env_file:
-      - ./.env
     environment:
       - NODE_ENV=production
       - TYPEORM_PORT=3306
