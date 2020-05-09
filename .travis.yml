@@ -76,6 +76,7 @@ before_script:
   - sudo chmod +x ./script-travis.sh
 
 script: 
+  - yarn db:sync
   - yarn test
   # - ./script-travis.sh
 

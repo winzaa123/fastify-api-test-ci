@@ -89,4 +89,23 @@ describe("Server", () => {
         )
       })
 
+      test("POST /parks/list List park", done => {
+        const body =   {
+          parkStatus: ParkStatus.ready
+        }
+        server.inject(
+          {
+            method: "POST",
+            url: `/parks/list`,
+            payload: body,
+          },
+          (err, res) => {
+            expect(res.statusCode).toBe(200)
+            const payload = JSON.parse(res.payload)
+            expect(payload.total).toEqual(2)
+            done(err)
+          }
+        )
+      })
+
 });
