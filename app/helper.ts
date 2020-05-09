@@ -64,5 +64,6 @@ async function main(){
 
       }
       console.log('Okk')
+      process.exit()
 }
 main()
