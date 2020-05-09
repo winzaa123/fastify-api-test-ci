@@ -6,6 +6,7 @@ import cors from "cors"
 import db from "./plugins/db"
 import carparkRoute from "./modules/carpark/routes"
 import parkRoute from "./modules/parking/routes"
+import healthRoute from "./modules/health/routes"
 
 
 function createServer() {
@@ -36,6 +37,8 @@ function createServer() {
   })
 
   server.register(db)
+  server.register(healthRoute)
+  
   server.register(parkRoute,{prefix:'/parks'})
   server.register(carparkRoute)
 

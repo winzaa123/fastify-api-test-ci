@@ -9,7 +9,7 @@
     "migration:revert": "node_modules/.bin/ts-node -r ./node_modules/tsconfig-paths/register ./node_modules/typeorm/cli.js migration:revert",
     "dev": "ts-node-dev --no-notify --respawn --transpileOnly ./",
     "build": "tsc",
-    "test": "NODE_ENV=test jest --coverage",
+    "test": "cross-env NODE_ENV=test jest --coverage",
     "test:watch": "npm run test -- --watchAll"
   },
   "keywords": [],
@@ -31,7 +31,8 @@
     "@types/cors": "^2.8.6",
     "@types/jest": "^25.2.1",
     "@types/node": "^13.13.5",
-    "jest": "^26.0.1",
+    "cross-env": "^7.0.2",
+    "jest": "25.0.0",
     "ts-jest": "^25.5.0",
     "ts-node": "^8.10.1",
     "ts-node-dev": "^1.0.0-pre.44",

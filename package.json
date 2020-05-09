@@ -14,6 +14,8 @@
     "migration:run": "cd ./app && yarn run migration:run",
     "migration:revert": "cd ./app && yarn run migration:revert",
     "test": "cd app && yarn test",
+    "test:watch": "cd app && yarn test:watch",
+
     "build": "cd app && yarn build",
     "start": "app/node_modules/.bin/ts-node ./app/index.ts",
     

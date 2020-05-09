@@ -35,7 +35,7 @@ export default (server: FastifyServer, options, next) => {
         })
       );
 
-      res.code(200).send({ status: true, msg: "Request Success" });
+      res.code(201).send({ status: true, msg: "Request Success" });
     }
   );
   server.post(
@@ -53,7 +53,7 @@ export default (server: FastifyServer, options, next) => {
 
       await dbPark.update(slot.parkId, { status: ParkStatus.ready })
       await dbCarPark.update(slot.id,{carStatus:CarStatus.checkoutSuccess})
-      return { status: true, msg: "Checkout Success" };
+      return  res.code(200).send({ status: true, msg: "Checkout Success" })
     }
   );
   server.post("/search/park", { schema: listCarSchema }, async (req, res) => {

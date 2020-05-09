@@ -7,16 +7,15 @@ import { ParkStatus } from "./enum";
 export default (server: FastifyServer, options, next) => {
   server.post("/create", { schema: createParkSchema }, async (req, res) => {
     const { code, priority, status, parkSize } = req.body,
-      { dbPark } = server.db;
-    await dbPark.save(
-      dbPark.create({
+      { dbPark } = server.db
+      const d = dbPark.create({
         code,
         priority,
         status,
         parkSize,
       })
-    );
-    res.code(200).send({ status: true, msg: "Create Success" });
+    await dbPark.save(d);
+    res.code(201).send({ status: true, msg: "Create Success" });
   });
   server.post("/update/:id", { schema: updateParkSchema }, async (req, res) => {
     req.log.info(`update #${req.params.id}`);
