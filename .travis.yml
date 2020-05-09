@@ -1,0 +1,69 @@
+sudo: required
+
+services:
+  - docker
+env:
+  - DOCKER_COMPOSE_VERSION=1.25.4
+  - APP_PORT=80
+  - MYSQL_ROOT_PASSWORD=1234
+  - MYSQL_USER=user
+  - MYSQL_PASSWORD=1234
+  - MYSQL_DATABASE=db_assign
+  
+language: node_js
+
+node_js:
+  - "10"
+
+before_cache:
+  # Save tagged docker images
+  - >
+    mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
+    | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
+    
+cache:
+  bundler: true
+  directories:
+    - $HOME/docker
+    - $HOME/.npm
+
+# addons:
+#   sauce_connect: true
+before_install:
+  # docker update
+#   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+#   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+#   - sudo apt-get update
+#   - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  # docker-compose update
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  # install express
+  - cd express-example &&  npm i  --production && cd ..    
+    # Load cached docker images
+  - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
+  
+# addons:
+#   apt:
+#     packages:
+#       - docker-ce
+
+before_script:
+  - docker -v
+  - docker-compose --version
+  - docker-compose up -d  --build
+  - docker ps -a
+  - sleep 10  # wait for create network and express to start
+#   - pwd
+  - docker-compose -f docker-compose-test.yml up -d  --build
+  - docker ps -a
+  - sleep 30  # wait for MariaDB to start
+
+script: 
+  - ./script-travis.sh
+
+after_script:
+  - docker-compose   down
+  - docker-compose -f docker-compose-test.yml down
