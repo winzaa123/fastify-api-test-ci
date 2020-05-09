@@ -72,6 +72,7 @@ before_script:
   - docker-compose -f docker-compose-test.yml up -d  --build
   - docker ps -a
   - sleep 30  # wait for MariaDB to start
+  - docker-compose -f docker-compose-test.yml exec mysql sh -c "mysql -u root -${MYSQL_ROOT_PASSWORD} -e 'CREATE DATABASE ${MYSQL_DATABASE}'"
   - docker ps -a
   - sudo chmod +x ./script-travis.sh
 
