@@ -22,8 +22,8 @@ export const listParkSchema = {
     properties: {
       code: { type: "string"  , nullable: true, default: null},
       counterPark: { type: "number" },
-      parkStatus: { type: ["string","null"], nullable: true, default: null },
-      parkSize: { type: ["string","null"], nullable: true, default: null },
+      parkStatus: { type: ["string","null"],enum:parkStatus, nullable: true, default: "" },
+      parkSize: { type: ["string","null"],enum:parkSize, nullable: true, default: "" },
     },
   },
   response: {

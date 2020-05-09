@@ -48,11 +48,10 @@ export const listCarSchema = {
     // required: [],
     properties: {
       plateNumber: { type: "string"  , nullable: true, default: null},
-      carSize: { type: ["string","null"] , enum:carSize, nullable: true, default: null },
-      parkStatus: { type: ["string","null"], enum:parkStatus, nullable: true, default: null },
-      carStatus: { type: ["null","string"], enum:carStatus, nullable: true, default: null },
+      carSize: { type: ["string","null"] , enum:carSize, nullable: true, default: "" },
+      parkStatus: { type: ["string","null"], enum:parkStatus, nullable: true, default: "" },
+      carStatus: { type: ["null","string"], enum:carStatus, nullable: true, default: "" },
       page: { type: "number" ,nullable: true,   default: 1 },
-
 
     },
   },
