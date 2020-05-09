@@ -1,9 +1,13 @@
 import {
   CarSize,CarStatus
 } from './enum'
+import {
+  ParkStatus
+} from '../parking/enum'
 
-const carSize = Object.keys(CarSize).map(k => CarSize[k])
-// ,  carStatus = Object.keys(CarStatus).map(k => CarStatus[k])
+const carSize = ["",...Object.keys(CarSize).map(k => CarSize[k])]
+,  carStatus = ["",...Object.keys(CarStatus).map(k => CarStatus[k])]
+,  parkStatus = ["",...Object.keys(ParkStatus).map(k => ParkStatus[k])]
 export const carSchema = {
   id: {
     type: "number",
@@ -22,7 +26,7 @@ export const carSchema = {
   },
   carStatus: {
     type: "string",
-    enum: carSize,
+    enum: carStatus,
     default: CarStatus.park
   },
 
@@ -44,9 +48,9 @@ export const listCarSchema = {
     // required: [],
     properties: {
       plateNumber: { type: "string"  , nullable: true, default: null},
-      carSize: { type: ["string","null"], nullable: true, default: null },
-      parkStatus: { type: ["string","null"], nullable: true, default: null },
-      carStatus: { type: ["null","string"], nullable: true, default: null },
+      carSize: { type: ["string","null"] , enum:carSize, nullable: true, default: null },
+      parkStatus: { type: ["string","null"], enum:parkStatus, nullable: true, default: null },
+      carStatus: { type: ["null","string"], enum:carStatus, nullable: true, default: null },
       page: { type: "number" ,nullable: true,   default: 1 },
 
 

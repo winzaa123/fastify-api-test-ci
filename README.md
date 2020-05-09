@@ -5,8 +5,8 @@
 ## Development
 
 - use `docker-compose-dev.yml` for infrastructure in local or test deploy in local
-- npm i -g typescript ts-node
-- tsc -p app/tsconfig.json
+- `npm i -g typescript ts-node` for prepare build
+- `tsc -p app/tsconfig.json` for build
 - `docker-compose up -d --build` **or** `docker-compose up -d --build backend_app nginx`  **or** `docker-compose exec backend_app pm2 reload myApp`
 - `docker-compose exec  nginx nginx -s reload`
 

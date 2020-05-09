@@ -2,7 +2,7 @@
 
 - typescript
 - typeorm
-- jwt token
+<!-- - jwt token   -->
 - json schema validation
 - build swagger documentation from routes
 - integration tests
