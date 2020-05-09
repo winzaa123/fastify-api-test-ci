@@ -68,7 +68,6 @@ before_script:
 
 script: 
   - ./script-travis.sh
-  - yarn test
 
 after_script:
   - docker-compose   down
