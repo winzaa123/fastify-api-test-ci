@@ -15,13 +15,18 @@ export const carSchema = {
   //   type: "string",
   //   enum: carStatus
   // },
+    carSize: {
+    type: "string",
+    enum: carSize,
+    default: CarSize.small
+  },
   // parkStatus: {
   //   type: "string",
   //   enum: carSize,
   //   default: CarStatus.atCounter
   // },
 
-  createdAt: {
+  checkInAt: {
     type: "string",
     format: "date-time"
   },
@@ -55,23 +60,24 @@ export const requestCarParkSchema = {
   description: "Request park the car",
   body: {
     type: "object",
-    required: ["plateNumber", "size","parkId"],
+    required: ["plateNumber", "size"],
     properties: {
       plateNumber: {
         type: "string"
       },
       size: {
         type: "string",
-        enum: carSize
+        enum: carSize,
+        default:CarSize.small
       },
       // parkStatus: {
       //   type: "string",
       //   enum: carStatus,
       //   default: CarStatus.atCounter
       // },
-      parkId: {
-        type: "number"
-      },
+      // parkId: {
+      //   type: "number"
+      // },
     }
   },
   response: {
@@ -90,14 +96,10 @@ export const updateCarParkSchema = {
   description: "Update park the car",
   body: {
     type: "object",
-    required: ["plateNumber", "size","parkId"],
+    required: ["id"],
     properties: {
-      plateNumber: {
-        type: "string"
-      },
-      size: {
-        type: "string",
-        enum: carSize
+      id: {
+        type: "number"
       },
       // parkStatus: {
       //   type: "string",

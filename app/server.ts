@@ -36,7 +36,7 @@ function createServer() {
   })
 
   server.register(db)
-  server.register(parkRoute,{routePrefix:'/parks'})
+  server.register(parkRoute,{prefix:'/parks'})
   server.register(carparkRoute)
 
 

@@ -17,7 +17,7 @@ export class CarPark {
   id: number
 
   @Index('plateNumber')
-  @Column({})
+  @Column({length:32})
   plateNumber: string
 
   @Index('carSize')
@@ -36,7 +36,7 @@ export class CarPark {
   // parkStatus: string
 
   @CreateDateColumn()
-  createdAt: string
+  checkInAt: string
 
   @UpdateDateColumn()
   updatedAt: string
