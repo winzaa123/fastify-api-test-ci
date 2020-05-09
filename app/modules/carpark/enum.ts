@@ -7,9 +7,7 @@ export enum CarSize {
 }
 
 
-// export enum CarStatus {
-//     leaveFromSlot = "L",
-//     backToCounter = "B",
-//     park = "P", 
-//     atCounter = "A"
-// }
+export enum CarStatus {
+    checkoutSuccess = "S",
+    park = "P"
+}

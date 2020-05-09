@@ -36,24 +36,32 @@ export const carSchema = {
   }
 }
 
-// export const listCarParkSchema = {
-//   summary: "List Car Parking slot",
-//   description: "List Paring slot",
-//   response: {
-//     200: {
-//       type: "object",
-//       properties: {
-//         total: {
-//           type: "number"
-//         },
-//         items: {
-//           type: "array",
-//           items: carSchema
-//         }
-//       }
-//     }
-//   }
-// }
+export const listCarSchema = {
+  summary: "list car parks",
+  description: "API Search Car in Parking lot",
+  body: {
+    type: "object",
+    // required: [],
+    properties: {
+      plateNumber: { type: "string"  , nullable: true, default: null},
+      carSize: { type: ["string","null"], nullable: true, default: null },
+      parkStatus: { type: ["string","null"], nullable: true, default: null },
+
+    },
+  },
+  response: {
+    200: {
+      type: "object",
+      properties: {
+        total: { type: "number" },
+        items: {
+          type: "array",
+          items: {type: "object" , properties:carSchema},
+        },
+      },
+    },
+  },
+};
 
 export const requestCarParkSchema = {
   summary: "Request park the car",
@@ -91,7 +99,7 @@ export const requestCarParkSchema = {
   }
 }
 
-export const updateCarParkSchema = {
+export const checkoutCarParkSchema = {
   summary: "Update park the car",
   description: "Update park the car",
   body: {
@@ -106,9 +114,9 @@ export const updateCarParkSchema = {
       //   enum: carStatus,
       //   default: CarStatus.backToCounter
       // },
-      parkId: {
-        type: "number"
-      },
+      // parkId: {
+      //   type: "number"
+      // },
     }
   },
   response: {

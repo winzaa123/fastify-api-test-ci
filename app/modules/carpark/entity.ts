@@ -8,7 +8,7 @@ import {
   ManyToOne
 } from "typeorm"
 import{
-  CarSize
+  CarSize,CarStatus
     } from './enum'
 import {Parking} from '../parking/entity'
 @Entity()
@@ -27,13 +27,13 @@ export class CarPark {
   })
   size: string
 
-  // @Index('parkStatus')
-  // @Column({
-  //   type: "enum",
-  //   enum: CarStatus,
-  //   default:CarStatus.atCounter
-  // })
-  // parkStatus: string
+  @Index('parkStatus')
+  @Column({
+    type: "enum",
+    enum: CarStatus,
+    default:CarStatus.park
+  })
+  carStatus: string
 
   @CreateDateColumn()
   checkInAt: string

@@ -93,3 +93,41 @@ export const updateParkSchema = {
     },
   },
 };
+
+
+export const availableParkSchema = {
+  summary: "Available parks",
+  description: "available park all",
+  response: {
+    200: {
+      type: "object",
+      properties: {
+        total: { type: "number" },
+        sTotal: { type: "number" },
+        mTotal: { type: "number" },
+        lTotal: { type: "number" },
+
+      },
+    },
+  },
+};
+export const availableBySizeParkSchema = {
+  summary: "Available parks by size",
+  description: "available park by size",
+  params: {
+    type: "object",
+    required: ["size"],
+    properties: {
+      size: { type: "string" , enum: parkSize },
+    },
+  },
+  response: {
+    200: {
+      type: "object",
+      properties: {
+        total: { type: "number" },
+        available: { type: "number" },
+      },
+    },
+  },
+};

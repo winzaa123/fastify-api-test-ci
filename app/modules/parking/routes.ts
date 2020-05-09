@@ -1,6 +1,8 @@
-import { createParkSchema, updateParkSchema,listParkSchema } from "./schema";
+import { createParkSchema, updateParkSchema,listParkSchema,availableParkSchema,availableBySizeParkSchema } from "./schema";
 
 import { FastifyServer } from "../context";
+import { CarSize } from "../carpark/enum";
+import { ParkStatus } from "./enum";
 
 export default (server: FastifyServer, options, next) => {
   server.post("/create", { schema: createParkSchema }, async (req, res) => {
@@ -35,10 +37,10 @@ export default (server: FastifyServer, options, next) => {
       const query =  dbPark.createQueryBuilder("q")
 
       if(parkStatus){
-        query.andWhere("status = :parkStatus", { parkStatus })
+        query.andWhere("q.status = :parkStatus", { parkStatus })
       }
       if(parkSize){
-        query.andWhere("parkSize = :parkSize", { parkSize })
+        query.andWhere("q.parkSize = :parkSize", { parkSize })
       }else{
         query.addOrderBy("q.parkSize","ASC")
       }
@@ -46,18 +48,45 @@ export default (server: FastifyServer, options, next) => {
         query.andWhere('q.code LIKE :code',{code: `%${code}%`})
       }
       if(counterPark){
-        query.addOrderBy(`ABS(priority - ${counterPark})`)
+        query.addOrderBy(`ABS(q.priority - ${counterPark})`)
       }
       
 
 
       const [items,total] = await query
-      .take(30)
       .getManyAndCount()
-      console.log(items)
+      // console.log(items)
 
     
     res.code(200).send({ items,total });
+  });
+  server.get("/available", { schema: availableParkSchema }, async (req, res) => {
+    const  { dbPark } = server.db
+      const query =  dbPark.createQueryBuilder("q")
+
+      const items= await query
+      .select('id')
+      .addSelect("COUNT(*)","total")
+      .addSelect(`SUM(case when (q.parkSize = '${CarSize.small}'  AND q.status = '${ParkStatus.ready}' ) then 1 else 0 end)`,"sTotal")
+      .addSelect(`SUM(case when (q.parkSize = '${CarSize.medium}' AND q.status = '${ParkStatus.ready}' ) then 1 else 0 end)`,"mTotal")
+      .addSelect(`SUM(case when (q.parkSize = '${CarSize.large}'  AND q.status = '${ParkStatus.ready}' ) then 1 else 0 end)`,"lTotal")
+      .getRawOne()
+      const {sTotal,total,mTotal,lTotal}  = items
+
+    res.code(200).send({ sTotal,total,mTotal,lTotal });
+  });
+  server.get("/available/:size", { schema: availableBySizeParkSchema }, async (req, res) => {
+    const  { dbPark } = server.db
+    const {size} = req.params
+    const query =  dbPark.createQueryBuilder("q")
+      const items= await query
+      .select('id')
+      .addSelect("COUNT(*)","total")
+      .addSelect(`SUM(case when (q.parkSize = '${size}'  AND q.status = '${ParkStatus.ready}' ) then 1 else 0 end)`,"available")
+      .getRawOne()
+      const {available,total}  = items
+
+    res.code(200).send({available,total });
   });
   next();
 };
