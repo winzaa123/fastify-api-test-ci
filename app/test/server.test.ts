@@ -146,8 +146,7 @@ describe("Server", () => {
         )
       })
 
-      const checkSmall = (textDisplay,expectData) =>{
-        test(textDisplay, done => {
+      const checkSmall = (textDisplay,expectData) => test(textDisplay, done => {
           server.inject(
             {
               method: "GET",
@@ -161,7 +160,7 @@ describe("Server", () => {
             }
           )
         })
-      }
+      
       checkSmall( "GET /parks/available/:size Check Available park by Size Full",{
         "total": 2,
         "available": 2
@@ -187,16 +186,12 @@ describe("Server", () => {
         )
       })
 
-      test("POST /request/park  Request park slot available #1", done => {
-        const body =   {
-          plateNumber: "ABC-1234",
-          size: CarSize.small
-        }
+      const createRequestParkSuccess = (textDisplay,dataCreate) => test(textDisplay,done => { 
         server.inject(
           {
             method: "POST",
             url: `/request/park`,
-            payload: body,
+            payload: dataCreate,
           },
           (err, res) => {
             expect(res.statusCode).toBe(201)
@@ -206,25 +201,14 @@ describe("Server", () => {
           }
         )
       })
+      createRequestParkSuccess("POST /request/park  Request park slot available #1",{
+        plateNumber: "ABC-1234",
+        size: CarSize.small
+      })
 
-      test("POST /request/park  Request park slot available #2", done => {
-        const body =   {
-          plateNumber: "ABC-2000",
-          size: CarSize.small
-        }
-        server.inject(
-          {
-            method: "POST",
-            url: `/request/park`,
-            payload: body,
-          },
-          (err, res) => {
-            expect(res.statusCode).toBe(201)
-            const payload = JSON.parse(res.payload)
-            expect(payload.status).toEqual(true)
-            done(err)
-          }
-        )
+      createRequestParkSuccess("POST /request/park  Request park slot available #1",{
+        plateNumber: "ABC-2000",
+        size: CarSize.small
       })
 
       checkSmall( "GET /parks/available/:size Check Available park by Size after request",{
@@ -232,7 +216,7 @@ describe("Server", () => {
         "available": 0
       })
 
-      test("POST /checkout/park  Request park slot available", done => {
+      test("POST /checkout/park  Checkout park slot", done => {
         const body =   {
           id: 1
         }
