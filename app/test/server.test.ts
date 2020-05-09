@@ -48,7 +48,7 @@ describe("Server", () => {
         )
       })
     
-      test("CREATE /parks/create SUCCESS", done => {
+      test("CREATE A1 /parks/create SUCCESS", done => {
         const body =   {
           code: "A1"
           ,priority: 0
@@ -57,6 +57,27 @@ describe("Server", () => {
           {
             method: "POST",
             url: `/parks/create`,
+            payload: body,
+          },
+          (err, res) => {
+            expect(res.statusCode).toBe(201)
+            const payload = JSON.parse(res.payload)
+            expect(payload.status).toEqual(true)
+            done(err)
+          }
+        )
+      })
+
+      test("UPDATE A2 /parks/update/:id SUCCESS", done => {
+        const  id =  2
+        const body =   {
+          code: "A22"
+          ,priority: 2
+        }
+        server.inject(
+          {
+            method: "POST",
+            url: `/products/${id}`,
             payload: body,
           },
           (err, res) => {
