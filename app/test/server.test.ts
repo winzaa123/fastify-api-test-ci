@@ -4,6 +4,7 @@ import { ParkStatus } from "../modules/parking/enum";
 import { Parking } from "../modules/parking/entity";
 import { CarPark } from "../modules/carpark/entity";
 import { FastifyServer } from "../modules/context";
+import { CarSize } from "modules/carpark/enum";
 
 
 
@@ -148,7 +149,7 @@ describe("Server", () => {
         server.inject(
           {
             method: "GET",
-            url: `/parks/available/${ParkStatus.ready}`,
+            url: `/parks/available/${CarSize.small}`,
           },
           (err, res) => {
             expect(res.statusCode).toBe(200)
