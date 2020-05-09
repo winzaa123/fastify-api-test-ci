@@ -24,7 +24,7 @@ export default (server: FastifyServer, options, next) => {
       // console.log(parkFirst);
       // const parkFirst = await dbPark.findOne({where:{status:ParkStatus.ready},order:{priority:"ASC"}})
       if (!parkFirst) {
-        return { status: false, msg: "Can't process because slot full" };
+        res.code(200).send( { status: false, msg: "Can't process because slot full" })
       }
       await dbPark.update(parkFirst.id, { status: ParkStatus.active });
       await dbCarPark.save(

@@ -187,7 +187,7 @@ describe("Server", () => {
         )
       })
 
-      test("POST /request/park  Request park slot available", done => {
+      test("POST /request/park  Request park slot available #1", done => {
         const body =   {
           plateNumber: "ABC-1234",
           size: CarSize.small
@@ -199,7 +199,7 @@ describe("Server", () => {
             payload: body,
           },
           (err, res) => {
-            expect(res.statusCode).toBe(200)
+            expect(res.statusCode).toBe(201)
             const payload = JSON.parse(res.payload)
             expect(payload.status).toEqual(true)
             done(err)
@@ -207,7 +207,7 @@ describe("Server", () => {
         )
       })
 
-      test("POST /request/park  Request park slot available", done => {
+      test("POST /request/park  Request park slot available #2", done => {
         const body =   {
           plateNumber: "ABC-2000",
           size: CarSize.small
@@ -219,7 +219,7 @@ describe("Server", () => {
             payload: body,
           },
           (err, res) => {
-            expect(res.statusCode).toBe(200)
+            expect(res.statusCode).toBe(201)
             const payload = JSON.parse(res.payload)
             expect(payload.status).toEqual(true)
             done(err)
