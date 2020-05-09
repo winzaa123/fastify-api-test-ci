@@ -235,6 +235,25 @@ describe("Server", () => {
         )
       })
 
+      test("POST /checkout/park  Checkout park slot Invalid ID", done => {
+        const body =   {
+          id: 50
+        }
+        server.inject(
+          {
+            method: "POST",
+            url: `/checkout/park`,
+            payload: body,
+          },
+          (err, res) => {
+            expect(res.statusCode).toBe(200)
+            const payload = JSON.parse(res.payload)
+            expect(payload.status).toEqual(false)
+            done(err)
+          }
+        )
+      })
+
       checkSmall( "GET /parks/available/:size Check Available park by Size after checkout",{
         "total": 2,
         "available": 1
@@ -243,7 +262,8 @@ describe("Server", () => {
 
       test("POST /search/park  Request search car by keyword", done => {
         const body =   {
-          plateNumber: "BC"
+          plateNumber: "BC",
+          carSize:CarSize.small
         }
         server.inject(
           {
@@ -297,9 +317,10 @@ describe("Server", () => {
         )
       })
 
-      test("POST /parks/list Search list park by keyword", done => {
-        const body =  <Parking>  {
-          code: "A"
+      test("POST /parks/list Search list park by keyword and counterDistance", done => {
+        const body =    {
+          code: "A",
+          counterPark:4
         }
         server.inject(
           {
@@ -311,6 +332,28 @@ describe("Server", () => {
             expect(res.statusCode).toBe(200)
             const payload = JSON.parse(res.payload)
             expect(payload.total).toEqual(2)
+
+            expect(payload.items[0].code).toEqual("A22")
+            
+            done(err)
+          }
+        )
+      })
+
+      test("POST /parks/list Search list park by large size", done => {
+        const body =  <Parking>  {
+          parkSize: CarSize.large
+        }
+        server.inject(
+          {
+            method: "POST",
+            url: `/parks/list`,
+            payload: body,
+          },
+          (err, res) => {
+            expect(res.statusCode).toBe(200)
+            const payload = JSON.parse(res.payload)
+            expect(payload.total).toEqual(0)
             done(err)
           }
         )

@@ -69,7 +69,7 @@ export default (server: FastifyServer, options, next) => {
         query.andWhere("q.carStatus = :carStatus", { carStatus })
       }
       if(carSize){
-        query.andWhere("carSize = :carSize", { carSize })
+        query.andWhere("q.size = :carSize", { carSize })
       }else{
         query.addOrderBy("q.size","ASC")
       }

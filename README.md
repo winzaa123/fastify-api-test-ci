@@ -1,14 +1,21 @@
-[![Build Status](https://travis-ci.org/winzaa123/fastify-api-test-ci.svg?branch=master)]
-# Deploy
+![Build Status](https://travis-ci.org/winzaa123/fastify-api-test-ci.svg?branch=master)
 
+# Fastify API TypeORM with Typescript
+
+## Development
+
+- use `docker-compose-dev.yml` for infrastructure in local or test deploy in local
 - npm i -g typescript ts-node
 - tsc -p app/tsconfig.json
-- docker-compose up -d --build **or** docker-compose up -d --build backend_app nginx  **or** docker-compose exec backend_app pm2 reload myApp
-- docker-compose exec  nginx nginx -s reload
+- `docker-compose up -d --build` **or** `docker-compose up -d --build backend_app nginx`  **or** `docker-compose exec backend_app pm2 reload myApp`
+- `docker-compose exec  nginx nginx -s reload`
 
-# Setup Database
+## Setup Database
 
 - `yarn db:droptable` # !!for clear database
-
 - `yarn db:sync` # for create database
 - `yarn db:init` # for init data
+
+## Test
+
+- use `docker-compose-test.yml` and `.travis-deploy.yml` for test deploy on container
