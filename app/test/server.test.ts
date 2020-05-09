@@ -1,5 +1,4 @@
 import createServer from "../server"
-import typeorm = require("typeorm")
 
 import { ParkStatus } from "../modules/parking/enum";
 import { Parking } from "../modules/parking/entity";
