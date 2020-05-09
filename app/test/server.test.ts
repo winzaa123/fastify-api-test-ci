@@ -134,7 +134,7 @@ describe("Server", () => {
           (err, res) => {
             expect(res.statusCode).toBe(200)
             const payload = JSON.parse(res.payload)
-            expect(JSON.parse(res.payload)[0]).toEqual({
+            expect(payload).toEqual({
               "total": 2,
               "sTotal": 2,
               "mTotal": 0,
