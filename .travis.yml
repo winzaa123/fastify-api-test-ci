@@ -41,7 +41,7 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   # install express
-  - cd express-example &&  npm i  --production && cd ..    
+  # - cd express-example &&  npm i  --production && cd ..    
     # Load cached docker images
   - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
   
