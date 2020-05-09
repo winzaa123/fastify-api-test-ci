@@ -50,8 +50,8 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   # Instal yarn
-  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version version-number
-  - export PATH="$HOME/.yarn/bin:$PATH"
+  # - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version version-number
+  # - export PATH="$HOME/.yarn/bin:$PATH"
   # install express
   - cd app &&  yarn --frozen-lockfile && cd ..    
     # Load cached docker images
