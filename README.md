@@ -1,4 +1,4 @@
-
+[![Build Status](https://travis-ci.org/winzaa123/fastify-api-test-ci.svg?branch=master)]
 # Deploy
 
 - npm i -g typescript ts-node
