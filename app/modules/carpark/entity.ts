@@ -31,7 +31,8 @@ export class CarPark {
   @Column({
     type: "enum",
     enum: CarStatus,
-    default:CarStatus.park
+    default:CarStatus.park,
+    comment:"For system"
   })
   carStatus: string
 

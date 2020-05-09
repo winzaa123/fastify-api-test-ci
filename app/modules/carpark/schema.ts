@@ -1,5 +1,5 @@
 import {
-  CarSize
+  CarSize,CarStatus
 } from './enum'
 
 const carSize = Object.keys(CarSize).map(k => CarSize[k])
@@ -20,11 +20,11 @@ export const carSchema = {
     enum: carSize,
     default: CarSize.small
   },
-  // parkStatus: {
-  //   type: "string",
-  //   enum: carSize,
-  //   default: CarStatus.atCounter
-  // },
+  carStatus: {
+    type: "string",
+    enum: carSize,
+    default: CarStatus.park
+  },
 
   checkInAt: {
     type: "string",

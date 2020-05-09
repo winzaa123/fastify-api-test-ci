@@ -24,7 +24,7 @@ export default (server: FastifyServer, options, next) => {
       // console.log(parkFirst);
       // const parkFirst = await dbPark.findOne({where:{status:ParkStatus.ready},order:{priority:"ASC"}})
       if (!parkFirst) {
-        res.code(200).send( { status: false, msg: "Can't process because slot full" })
+        return res.code(200).send( { status: false, msg: "Can't process because slot full" })
       }
       await dbPark.update(parkFirst.id, { status: ParkStatus.active });
       await dbCarPark.save(
@@ -35,7 +35,7 @@ export default (server: FastifyServer, options, next) => {
         })
       );
 
-      res.code(201).send({ status: true, msg: "Request Success" });
+      return res.code(201).send({ status: true, msg: "Request Success" });
     }
   );
   server.post(
@@ -48,7 +48,7 @@ export default (server: FastifyServer, options, next) => {
       const slot = await dbCarPark.findOne(id)
 
       if (!slot) {
-        return { status: false, msg: "Not found slot" };
+        return res.code(200).send({ status: false, msg: "Not found slot" })
       }
 
       await dbPark.update(slot.parkId, { status: ParkStatus.ready })
@@ -78,10 +78,10 @@ export default (server: FastifyServer, options, next) => {
 
       const [items,total] = await query
       .getManyAndCount()
-      console.log(items)
+      // console.log(items)
 
     
-    res.code(200).send({ items,total });
+      return res.code(200).send({ items,total });
   });
   next();
 };

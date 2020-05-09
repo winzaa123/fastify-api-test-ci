@@ -256,6 +256,27 @@ describe("Server", () => {
         "available": 1
       })
 
+
+      test("POST /search/park  Request park slot available", done => {
+        const body =   {
+          plateNumber: "BC"
+        }
+        server.inject(
+          {
+            method: "POST",
+            url: `/search/park`,
+            payload: body,
+          },
+          (err, res) => {
+            expect(res.statusCode).toBe(200)
+            const payload = JSON.parse(res.payload)
+            expect(payload.total).toEqual(2)
+            done(err)
+          }
+        )
+      })
+      
+
             
 
 });
