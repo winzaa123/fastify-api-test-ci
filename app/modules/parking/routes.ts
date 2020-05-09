@@ -1,6 +1,6 @@
 import { createParkSchema, updateParkSchema,listParkSchema,availableParkSchema,availableBySizeParkSchema } from "./schema";
 
-import { FastifyServer } from "../context";
+import { FastifyServer,calculatePage,takeDefault } from "../context";
 import { CarSize } from "../carpark/enum";
 import { ParkStatus } from "./enum";
 
@@ -31,7 +31,7 @@ export default (server: FastifyServer, options, next) => {
   });
 
   server.post("/list", { schema: listParkSchema }, async (req, res) => {
-    const { code, counterPark, parkStatus, parkSize } = req.body,
+    const { code, counterPark, parkStatus, parkSize,page } = req.body,
       { dbPark } = server.db
       const query =  dbPark.createQueryBuilder("q")
 
@@ -53,6 +53,8 @@ export default (server: FastifyServer, options, next) => {
 
 
       const [items,total] = await query
+      .skip(calculatePage(page,takeDefault))
+      .take(takeDefault)
       .getManyAndCount()
       // console.log(items)
 
