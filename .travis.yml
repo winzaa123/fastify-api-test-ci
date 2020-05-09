@@ -66,6 +66,7 @@ before_script:
 script: 
   - yarn db:sync
   - yarn test
+  - yarn build # check code again
   # - ./script-travis.sh
 
 after_script:

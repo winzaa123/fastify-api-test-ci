@@ -4,7 +4,7 @@ import { ParkStatus } from "../modules/parking/enum";
 import { Parking } from "../modules/parking/entity";
 import { CarPark } from "../modules/carpark/entity";
 import { FastifyServer } from "../modules/context";
-import { CarSize } from "../modules/carpark/enum";
+import { CarSize, CarStatus } from "../modules/carpark/enum";
 
 
 
@@ -251,13 +251,13 @@ describe("Server", () => {
         )
       })
 
-      checkSmall( "GET /parks/available/:size Check Available park by Size after request",{
-        "total": 1,
+      checkSmall( "GET /parks/available/:size Check Available park by Size after checkout",{
+        "total": 2,
         "available": 1
       })
 
 
-      test("POST /search/park  Request park slot available", done => {
+      test("POST /search/park  Request search car by keyword", done => {
         const body =   {
           plateNumber: "BC"
         }
@@ -276,6 +276,43 @@ describe("Server", () => {
         )
       })
       
+      test("POST /search/park  Request search car in park current", done => {
+        const body = <CarPark>  {
+          carStatus: CarStatus.park
+        }
+        server.inject(
+          {
+            method: "POST",
+            url: `/search/park`,
+            payload: body,
+          },
+          (err, res) => {
+            expect(res.statusCode).toBe(200)
+            const payload = JSON.parse(res.payload)
+            expect(payload.total).toEqual(1)
+            done(err)
+          }
+        )
+      })
+
+      test("POST /parks/list Search list park by keyword", done => {
+        const body =  <Parking>  {
+          code: "A"
+        }
+        server.inject(
+          {
+            method: "POST",
+            url: `/parks/list`,
+            payload: body,
+          },
+          (err, res) => {
+            expect(res.statusCode).toBe(200)
+            const payload = JSON.parse(res.payload)
+            expect(payload.total).toEqual(2)
+            done(err)
+          }
+        )
+      })
 
             
 
