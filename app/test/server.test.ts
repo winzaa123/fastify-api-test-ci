@@ -66,6 +66,25 @@ describe("Server", () => {
           }
         )
       })
+      test("CREATE A2 /parks/create SUCCESS", done => {
+        const body =   {
+          code: "A2"
+          ,priority: 0
+        }
+        server.inject(
+          {
+            method: "POST",
+            url: `/parks/create`,
+            payload: body,
+          },
+          (err, res) => {
+            expect(res.statusCode).toBe(201)
+            const payload = JSON.parse(res.payload)
+            expect(payload.status).toEqual(true)
+            done(err)
+          }
+        )
+      })
 
       test("UPDATE A2 /parks/update/:id SUCCESS", done => {
         const  id =  2
@@ -76,7 +95,7 @@ describe("Server", () => {
         server.inject(
           {
             method: "POST",
-            url: `/products/${id}`,
+            url: `/parks/update/${id}`,
             payload: body,
           },
           (err, res) => {
@@ -106,5 +125,43 @@ describe("Server", () => {
           }
         )
       })
+      test("GET /parks/available Check Available park", done => {
+        server.inject(
+          {
+            method: "GET",
+            url: `/parks/available`,
+          },
+          (err, res) => {
+            expect(res.statusCode).toBe(200)
+            const payload = JSON.parse(res.payload)
+            expect(JSON.parse(res.payload)[0]).toEqual({
+              "total": 2,
+              "sTotal": 2,
+              "mTotal": 0,
+              "lTotal": 0
+            })
+            done(err)
+          }
+        )
+      })
+      test("GET /parks/available/:size Check Available park by Size", done => {
+        server.inject(
+          {
+            method: "GET",
+            url: `/parks/available/${ParkStatus.ready}`,
+          },
+          (err, res) => {
+            expect(res.statusCode).toBe(200)
+            const payload = JSON.parse(res.payload)
+            expect(payload).toEqual({
+              "total": 2,
+              "available": 2
+            })
+            done(err)
+          }
+        )
+      })
+
+            
 
 });
