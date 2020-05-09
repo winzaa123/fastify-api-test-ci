@@ -25,6 +25,7 @@ before_cache:
     
 cache:
   bundler: true
+  yarn: true
   directories:
     - $HOME/docker
     - $HOME/.npm
@@ -67,6 +68,7 @@ before_script:
 
 script: 
   - ./script-travis.sh
+  - yarn test
 
 after_script:
   - docker-compose   down
