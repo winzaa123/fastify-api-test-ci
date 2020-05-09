@@ -2,7 +2,7 @@
 
 # Fastify API TypeORM with Typescript
 
-## Development
+## Development & Pre-Production in local
 
 - use `docker-compose-dev.yml` for infrastructure in local or test deploy in local
 - `npm i -g typescript ts-node` for prepare build
@@ -16,6 +16,6 @@
 - `yarn db:sync` # for create database
 - `yarn db:init` # for init data
 
-## Test
+## Test Deploy On Travis CI
 
 - use `docker-compose-test.yml` and `.travis-deploy.yml` for test deploy on container
