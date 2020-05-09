@@ -318,4 +318,5 @@ describe("Server", () => {
 
             
 
+      afterAll(() => setTimeout(() => process.exit(), 1000))
 });
