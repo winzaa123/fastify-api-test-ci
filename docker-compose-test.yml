@@ -24,9 +24,11 @@ services:
     container_name: type_app
     image: keymetrics/pm2:10-alpine
     # restart: always
-    working_dir: /mnt/app  
-    command: > 
-        sh -c "pm2-runtime start /mnt/app/linux.config.js --env production"
+    working_dir: /usr/src/app
+    # command: > 
+    #   sh  
+    # stdin_open: true
+    # tty: true
     environment:
       - NODE_ENV=production
       - TYPEORM_PORT=3306
@@ -35,9 +37,6 @@ services:
       - TYPEORM_PASSWORD=$MYSQL_PASSWORD
       - TYPEORM_DATABASE=$MYSQL_DATABASE
       - TYPEORM_CONNECTION=mysql
-      
-    volumes:
-      - ./app:/mnt/app
     networks: 
       - backend_network
 

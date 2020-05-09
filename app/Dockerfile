@@ -11,7 +11,7 @@ RUN yarn build
 # deploy with pm2
 FROM keymetrics/pm2:latest-alpine
 
-COPY --from=build /usr/src/app /src
+COPY --from=build /usr/src/app /usr/src/app
 COPY --from=build /usr/src/app/pm2.json .
 EXPOSE 3000
 
