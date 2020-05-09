@@ -43,8 +43,11 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
+  # Instal yarn
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version version-number
+  - export PATH="$HOME/.yarn/bin:$PATH"
   # install express
-  # - cd express-example &&  npm i  --production && cd ..    
+  - cd app &&  yarn --frozen-lockfile && cd ..    
     # Load cached docker images
   - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
   
@@ -67,7 +70,8 @@ before_script:
   - sudo chmod +x ./script-travis.sh
 
 script: 
-  - ./script-travis.sh
+  - yarn test
+  # - ./script-travis.sh
 
 after_script:
   - docker-compose   down
