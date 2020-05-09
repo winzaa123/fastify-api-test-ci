@@ -4,7 +4,7 @@ import { ParkStatus } from "../modules/parking/enum";
 import { Parking } from "../modules/parking/entity";
 import { CarPark } from "../modules/carpark/entity";
 import { FastifyServer } from "../modules/context";
-import { CarSize } from "modules/carpark/enum";
+import { CarSize } from "../modules/carpark/enum";
 
 
 
