@@ -4,13 +4,13 @@ services:
   - mysql
 env:
   global:
-    - DOCKER_COMPOSE_VERSION=1.25.4
-    - APP_PORT=80
-    - MYSQL_ROOT_PASSWORD=1234
-    - MYSQL_USER=user
-    - MYSQL_PASSWORD=1234
-    - MYSQL_DATABASE=db_assign
-    - APP_DEV_MYSQL_PORT=3306
+    # - DOCKER_COMPOSE_VERSION=1.25.4
+    # - APP_PORT=80
+    # - MYSQL_ROOT_PASSWORD=1234
+    # - MYSQL_USER=user
+    # - MYSQL_PASSWORD=1234
+    # - MYSQL_DATABASE=db_assign
+    # - APP_DEV_MYSQL_PORT=3306
     - TYPEORM_CONNECTION=mysql
     - TYPEORM_HOST=localhost
     - TYPEORM_PORT=3306
@@ -40,6 +40,7 @@ cache:
 #   sauce_connect: true
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS db_assign;'
+  - mysql -e 'SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));'
   # Instal yarn
   # - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version version-number
   # - export PATH="$HOME/.yarn/bin:$PATH"

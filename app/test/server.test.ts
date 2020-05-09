@@ -99,7 +99,7 @@ describe("Server", () => {
             payload: body,
           },
           (err, res) => {
-            expect(res.statusCode).toBe(201)
+            expect(res.statusCode).toBe(200)
             const payload = JSON.parse(res.payload)
             expect(payload.status).toEqual(true)
             done(err)
