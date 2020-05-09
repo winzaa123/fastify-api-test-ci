@@ -63,6 +63,7 @@ before_script:
   - docker ps -a
   - sleep 30  # wait for MariaDB to start
   - docker ps -a
+  - sudo chmod +x ./script-travis.sh
 
 script: 
   - ./script-travis.sh
