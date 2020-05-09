@@ -260,8 +260,26 @@ describe("Server", () => {
         )
       })
       
-      test("POST /search/park  Request search car in park current", done => {
-        const body = <CarPark>  {
+      test("POST /search/park  Request search car in park current with parkStatus", done => {
+        const body =   {
+          parkStatus: ParkStatus.active
+        }
+        server.inject(
+          {
+            method: "POST",
+            url: `/search/park`,
+            payload: body,
+          },
+          (err, res) => {
+            expect(res.statusCode).toBe(200)
+            const payload = JSON.parse(res.payload)
+            expect(payload.total).toEqual(1)
+            done(err)
+          }
+        )
+      })
+      test("POST /search/park  Request search car in park current with carStatus", done => {
+        const body =   {
           carStatus: CarStatus.park
         }
         server.inject(

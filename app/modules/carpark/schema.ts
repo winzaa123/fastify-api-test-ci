@@ -46,6 +46,8 @@ export const listCarSchema = {
       plateNumber: { type: "string"  , nullable: true, default: null},
       carSize: { type: ["string","null"], nullable: true, default: null },
       parkStatus: { type: ["string","null"], nullable: true, default: null },
+      carStatus: { type: ["null","string"], nullable: true, default: null },
+
 
     },
   },

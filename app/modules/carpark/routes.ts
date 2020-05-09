@@ -57,13 +57,16 @@ export default (server: FastifyServer, options, next) => {
     }
   );
   server.post("/search/park", { schema: listCarSchema }, async (req, res) => {
-    const { plateNumber, carSize, parkStatus } = req.body,
+    const { plateNumber, carSize, parkStatus,carStatus } = req.body,
       { dbCarPark } = server.db
       const query =  dbCarPark.createQueryBuilder("q")
 
       if(parkStatus){
         query.leftJoin("q.park", "park")
         query.andWhere("park.status = :parkStatus", { parkStatus })
+      }
+      if(carStatus){
+        query.andWhere("q.carStatus = :carStatus", { carStatus })
       }
       if(carSize){
         query.andWhere("carSize = :carSize", { carSize })
