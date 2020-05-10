@@ -58,7 +58,7 @@ before_script:
 
 script: 
   - yarn db:sync
-  - yarn test
+  - yarn test -- --forceExit --detectOpenHandles
   - yarn build # check code again
   # - ./script-travis.sh
 

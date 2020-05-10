@@ -16,7 +16,7 @@ describe("Server", () => {
     })
     afterAll(async (done) => {
       await server.close()
-      await setTimeout(() => process.exit(0), 1000)
+      // await setTimeout(() => process.exit(0), 1000)
       done()
     })
   
