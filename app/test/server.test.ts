@@ -14,9 +14,9 @@ describe("Server", () => {
     beforeEach(async () => {
       await server.ready()
     })
-    afterAll(async () => {
+    afterAll(async (done) => {
       await server.close()
-      setTimeout(() => process.exit(), 1000)
+      done()
     })
   
     test("/health returns ok", done => {
