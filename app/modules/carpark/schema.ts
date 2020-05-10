@@ -5,9 +5,9 @@ import {
   ParkStatus
 } from '../parking/enum'
 
-const carSize = ["",...Object.keys(CarSize).map(k => CarSize[k])]
-,  carStatus = ["",...Object.keys(CarStatus).map(k => CarStatus[k])]
-,  parkStatus = ["",...Object.keys(ParkStatus).map(k => ParkStatus[k])]
+const carSize = ["",...Object.values(CarSize)]
+,  carStatus = ["",...Object.values(CarStatus)]
+,  parkStatus = ["",...Object.values(ParkStatus)]
 export const carSchema = {
   id: {
     type: "number",
@@ -106,8 +106,8 @@ export const requestCarParkSchema = {
 }
 
 export const checkoutCarParkSchema = {
-  summary: "Update park the car",
-  description: "Update park the car",
+  summary: "Checkout park the car",
+  description: "Checkout park the car",
   body: {
     type: "object",
     required: ["id"],

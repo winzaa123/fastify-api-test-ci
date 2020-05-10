@@ -2,6 +2,8 @@
 
 # Fastify API TypeORM with Typescript
 
+- `/docs` API Document
+
 ## Development & Pre-Production in local
 
 - use `docker-compose-dev.yml` for infrastructure in local or test deploy in local

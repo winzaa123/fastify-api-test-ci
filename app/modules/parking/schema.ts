@@ -1,7 +1,7 @@
 import { ParkStatus } from "./enum";
 import { CarSize } from "../carpark/enum";
-const parkStatus = ["",...Object.keys(ParkStatus).map((k) => ParkStatus[k])]
-, parkSize = ["",...Object.keys(CarSize).map((k) => CarSize[k])]
+const parkStatus = ["",...Object.values(ParkStatus)]
+, parkSize = ["",...Object.values(CarSize)]
 
 export const parkSchema = {
   id: { type: "number" },
